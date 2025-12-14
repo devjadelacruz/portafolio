@@ -21,3 +21,9 @@ Sistema web para registrar y gestionar tickets de soporte (mesa de ayuda).
 - [ ] Comentarios por ticket
 - [ ] Dashboard básico
 
+## Cómo ejecutar en local (Día 2)
+
+### 1) Levantar PostgreSQL (Docker)
+```bash
+docker compose up -d
+docker ps

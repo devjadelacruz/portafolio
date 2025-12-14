@@ -269,3 +269,16 @@ archivo .env (donde va la cadena de conexión DATABASE_URL)
 apps/api/prisma/schema.prisma
 
 apps/api/.env
+
+
+### Cierre del Día 2 (resultado)
+✅ PostgreSQL levantado en Docker (helpdesk_db)  
+✅ API NestJS funcionando en http://localhost:3000  
+✅ Endpoint de salud: http://localhost:3000/health  
+✅ Prisma conectado y migración `init` aplicada (tabla User creada)
+
+Comandos de verificación:
+```powershell
+docker ps
+docker exec -it helpdesk_db psql -U helpdesk -d helpdesk -c "SELECT NOW();"
+npx prisma migrate status

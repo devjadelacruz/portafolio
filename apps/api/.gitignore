@@ -1,0 +1,10 @@
+# Node
+**/node_modules/
+**/dist/
+**/.next/
+**/out/
+
+# Env
+**/.env
+**/.env.*
+!**/.env.example

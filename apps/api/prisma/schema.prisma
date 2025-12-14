@@ -1,14 +1,11 @@
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
-
-
 
 model User {
   id        String   @id @default(uuid())
@@ -16,3 +13,27 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 } 
+
+enum TicketEstado{
+  NUEVO
+  EN_PROCESO
+  RESUELTO
+  CERRADO
+}
+
+enum TicketPrioridad{
+  BAJA
+  MEDIA
+  ALTA
+  URGENTE
+  }
+  
+model Ticket{
+  id        String         @id @default(uuid())
+  titulo    String
+  descripcion String
+  estado   TicketEstado   @default(NUEVO)
+  prioridad TicketPrioridad @default(MEDIA)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  }

@@ -1,8 +1,10 @@
 import {
   Body, // Lee el body (JSON) de la petición HTTP
   Controller, // Marca esta clase como un Controller de Nest
+  Delete, // Decorador para rutas DELETE
   Get, // Decorador para rutas GET
   Param, // Lee parámetros de ruta: /tickets/:id
+  Query, // Lee parámetros de consulta: /tickets?page=2&limit=10
   Patch, // Decorador para rutas PATCH (actualizaciones parciales)
   Post, // Decorador para rutas POST (creación)
   ParseUUIDPipe, // Valida y convierte el parámetro id (exige formato UUID)
@@ -11,6 +13,7 @@ import {
 import { TicketsService } from './tickets.service'; // Lógica de negocio (habla con Prisma/BD)
 import { CreateTicketDto } from './dto/create-ticket.dto'; // Valida estructura para crear
 import { UpdateTicketDto } from './dto/update-ticket.dto'; // Valida estructura para actualizar
+import { FindTicketsDto } from './dto/find-tickets.dto'; // Valida estructura para buscar/listar
 
 // Prefijo base: todas las rutas serán /tickets/...
 @Controller('tickets')
@@ -35,8 +38,8 @@ export class TicketsController {
   // =========================
   // Devuelve la lista de tickets.
   @Get()
-  findAll() {
-    return this.ticketsService.findAll();
+  findAll(@Query() query: FindTicketsDto) {
+    return this.ticketsService.findAll(query);
   }
 
   // =========================
@@ -63,15 +66,12 @@ export class TicketsController {
   ) {
     return this.ticketsService.update(id, dto);
   }
-
   // =========================
-  // PATCH /tickets/:id/cerrar
+  // DELETE /tickets/:id
   // =========================
-  // Acción específica: cerrar un ticket.
-  // Esto es útil cuando quieres una “operación de negocio” clara
-  // en lugar de depender de "update estado = CERRADO".
-  @Patch(':id/cerrar')
-  close(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.ticketsService.close(id);
+  // Elimina un ticket por ID.
+  @Delete(':id')
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.ticketsService.remove(id);
   }
 }
